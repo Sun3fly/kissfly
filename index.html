@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mengfei Zhang — Multimodal LLMs &amp; 3D Human-Object Interaction</title>
+<meta name="description" content="Mengfei Zhang, M.S. student at LIESMARS, Wuhan University. Multimodal large language models, computer vision, and 3D human-object interaction generation.">
+<style>
+  :root{
+    --fg:#1f2937; --muted:#6b7280; --accent:#1d4ed8; --accent-soft:#eff6ff;
+    --line:#e5e7eb; --card:#f8fafc; --bg:#ffffff; --maxw:980px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+
+  /* ---------- header ---------- */
+  header{border-bottom:1px solid var(--line); background:linear-gradient(180deg,#fbfdff,#ffffff)}
+  .head{display:flex; gap:28px; align-items:flex-start; padding:44px 0 30px}
+  .avatar{
+    flex:0 0 118px; width:118px; height:118px; border-radius:50%;
+    background:var(--accent-soft); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:40px; font-weight:700; color:var(--accent); letter-spacing:1px;
+  }
+  h1{font-size:31px; line-height:1.25; margin:2px 0 6px; letter-spacing:-.2px}
+  .role{font-size:16.5px; color:var(--muted); margin:0 0 4px}
+  .affil{font-size:15.5px; color:var(--muted); margin:0 0 12px}
+  .links{display:flex; flex-wrap:wrap; gap:9px}
+  .chip{
+    display:inline-block; padding:5px 12px; border:1px solid var(--line); border-radius:999px;
+    background:#fff; font-size:13.5px; color:var(--fg)
+  }
+  .chip:hover{border-color:var(--accent); color:var(--accent); text-decoration:none}
+
+  /* ---------- nav ---------- */
+  nav{position:sticky; top:0; z-index:20; background:rgba(255,255,255,.93); backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex; gap:20px; flex-wrap:wrap; padding:11px 22px; font-size:14.5px}
+  nav a{color:var(--muted)}
+  nav a:hover{color:var(--accent); text-decoration:none}
+
+  /* ---------- sections ---------- */
+  section{padding:34px 0 6px; border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+  h2{font-size:21px; margin:0 0 16px; letter-spacing:-.1px}
+  h2 .bar{display:inline-block; width:4px; height:19px; background:var(--accent);
+          border-radius:2px; margin-right:10px; vertical-align:-3px}
+  h3{font-size:16.5px; margin:0 0 4px}
+  p{margin:0 0 12px}
+  .muted{color:var(--muted)}
+  ul{margin:6px 0 14px; padding-left:20px}
+  li{margin-bottom:5px}
+
+  /* ---------- news ---------- */
+  .news{list-style:none; padding:0; margin:0}
+  .news li{display:flex; gap:14px; margin-bottom:7px}
+  .date{flex:0 0 78px; color:var(--muted); font-variant-numeric:tabular-nums; font-size:14.5px}
+
+  /* ---------- publications ---------- */
+  .pub{background:var(--card); border:1px solid var(--line); border-radius:12px;
+       padding:20px 20px 18px; margin-bottom:20px}
+  .pub .title{font-weight:650; font-size:16.5px; margin:0 0 5px; line-height:1.5}
+  .pub .authors{font-size:14.5px; margin:0 0 4px}
+  .pub .authors b{font-weight:650}
+  .pub .venue{font-size:14.5px; color:var(--muted); margin:0 0 10px}
+  .tag{display:inline-block; font-size:12.5px; padding:2px 8px; border-radius:6px;
+       background:var(--accent-soft); color:var(--accent); margin-left:7px; vertical-align:1px}
+  .pub .links{display:flex; gap:9px; margin-bottom:14px}
+  figure{margin:0}
+  figure img{width:100%; height:auto; display:block; border:1px solid var(--line);
+             border-radius:9px; background:#fff; cursor:zoom-in}
+  figcaption{font-size:13.5px; color:var(--muted); margin-top:9px; line-height:1.55}
+
+  /* ---------- experience ---------- */
+  .exp{margin-bottom:20px}
+  .exp.with-logo{display:flex; gap:16px; align-items:flex-start}
+  .logo-tile{
+    flex:0 0 132px; width:132px; height:58px; padding:10px 12px; background:#fff;
+    border:1px solid var(--line); border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .logo-tile img{max-width:100%; max-height:100%; object-fit:contain; display:block}
+  .exp-body{flex:1; min-width:0}
+  .exp .top{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+  .exp .where{font-weight:650}
+  .exp .when{color:var(--muted); font-size:14.5px; white-space:nowrap}
+  .exp .what{color:var(--muted); font-size:14.5px; margin:1px 0 7px}
+  .exp-body ul{margin-top:6px}
+
+  /* ---------- table-ish ---------- */
+  .kv{display:grid; grid-template-columns:150px 1fr; gap:6px 18px; font-size:15px}
+  .kv dt{color:var(--muted)}
+  .kv dd{margin:0}
+
+  footer{padding:28px 0 46px; color:var(--muted); font-size:14px}
+
+  /* ---------- lightbox ---------- */
+  #lb{position:fixed; inset:0; background:rgba(15,23,42,.92); display:none;
+      align-items:center; justify-content:center; z-index:60; padding:26px}
+  #lb.on{display:flex}
+  #lb img{max-width:96vw; max-height:88vh; border-radius:8px; background:#fff}
+  #lb button{position:absolute; top:16px; right:22px; background:none; border:0;
+             color:#fff; font-size:30px; cursor:pointer; line-height:1}
+
+  @media (max-width:620px){
+    .head{flex-direction:column; gap:18px; padding:32px 0 24px}
+    h1{font-size:26px}
+    .date{flex-basis:66px}
+    .kv{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head">
+    <div class="avatar">MZ</div>
+    <div>
+      <h1>Mengfei Zhang</h1>
+      <p class="role">M.S. Student in Photogrammetry and Remote Sensing</p>
+      <p class="affil">LIESMARS, Wuhan University</p>
+      <div class="links">
+        <a class="chip" href="mailto:kissfly0608@163.com">kissfly0608@163.com</a>
+        <a class="chip" href="https://arxiv.org/abs/2604.27491" target="_blank" rel="noopener">arXiv</a>
+        <!-- Add more links here, e.g.:
+        <a class="chip" href="https://github.com/your-id" target="_blank" rel="noopener">GitHub</a>
+        <a class="chip" href="https://scholar.google.com/citations?user=XXXX" target="_blank" rel="noopener">Google Scholar</a>
+        -->
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a href="#publications">Publications</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#awards">Awards</a>
+    <a href="#skills">Skills</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="about">
+    <h2><span class="bar"></span>About</h2>
+    <p>
+      I am a Master's student in Photogrammetry and Remote Sensing at
+      <b>LIESMARS, Wuhan University</b> (2024&ndash;2027). My research interests are
+      <b>computer vision</b>, <b>digital human motion and interaction generation</b>, and
+      <b>multimodal large language models</b>.
+    </p>
+    <p>
+      Before that, I received my B.Eng. in Geomatics from <b>Central South University</b> in 2024,
+      where I ranked 4/70 (top 5.7%) and received the National Inspiration Scholarship for three
+      consecutive years.
+    </p>
+    <p class="muted">
+      I am open to full-time positions in multimodal LLMs, computer vision and embodied AI.
+    </p>
+  </section>
+
+  <section id="news">
+    <h2><span class="bar"></span>News</h2>
+    <ul class="news">
+      <li><span class="date">2026.09</span><span>Completed my internship at <b>OBSBOT</b>, where I built a robotic-arm cinematography LLM.</span></li>
+      <li><span class="date">2026.06</span><span>Joined <b>OBSBOT</b> as a Multimodal LLM Algorithm Intern.</span></li>
+      <li><span class="date">2026.05</span><span>Completed my internship at <b>Hikvision</b> on knowledge distillation for multimodal LLMs.</span></li>
+      <li><span class="date">2026.01</span><span>Joined <b>Hikvision</b> as an LLM Algorithm Intern.</span></li>
+      <li><span class="date">2026</span><span>One paper accepted to <b>ACM Multimedia 2026</b> (CCF-A).</span></li>
+    </ul>
+  </section>
+
+  <section id="publications">
+    <h2><span class="bar"></span>Publications</h2>
+
+    <article class="pub">
+      <p class="title">Uni-HOI: A Unified Framework for Learning the Joint Distribution of Text and Human-Object Interaction</p>
+      <p class="authors"><b>Mengfei Zhang</b>, et al.</p>
+      <p class="venue">ACM International Conference on Multimedia (ACM MM), 2026<span class="tag">CCF-A</span><span class="tag">First author</span></p>
+      <div class="links">
+        <a class="chip" href="https://arxiv.org/abs/2604.27491" target="_blank" rel="noopener">arXiv</a>
+      </div>
+      <figure>
+        <img src="assets/unihoi_pipeline.png" alt="Overview of the Uni-HOI framework">
+        <figcaption>
+          <b>Overview of Uni-HOI.</b> A unified framework that models the joint distribution of text,
+          human motion and object motion with a large language model. Human and object motions are
+          tokenized by dedicated VQ-VAE encoders, whose codebooks are merged with the LLM vocabulary to
+          share a common feature space; a LoRA-tuned LLM then predicts the remaining modalities from any
+          given subset, supporting text-driven HOI generation, object-guided human motion generation and
+          joint human&ndash;object generation.
+        </figcaption>
+      </figure>
+    </article>
+
+    <article class="pub">
+      <p class="title">TAG-HOI: Temporal Affordance Guided 3D Human-Object Interaction Generation with Dynamic Contact</p>
+      <p class="authors"><b>Mengfei Zhang</b>, Wei Ke, Jinlu Zhang, Hongyan Li, Zhigang Tu</p>
+      <p class="venue">IEEE Transactions on Circuits and Systems for Video Technology (TCSVT), under review<span class="tag">CCF-B</span><span class="tag">First author</span></p>
+      <figure>
+        <img src="assets/taghoi_pipeline.png" alt="Overview of the TAG-HOI pipeline">
+        <figcaption>
+          <b>Overview of TAG-HOI.</b> A coarse-to-fine framework for text-driven 3D human&ndash;object
+          interaction generation. A temporal affordance representation models dense, oriented contact
+          vectors from the human body surface to the object surface. A Temporal Affordance Prediction
+          Model (TAPM) predicts a residual affordance term that corrects the affordance of the coarse
+          interaction; the closest vectors are then selected as contact affordance and used to guide a
+          second interaction diffusion pass, refining both human and object motion with dynamic contact.
+        </figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <section id="experience">
+    <h2><span class="bar"></span>Research &amp; Industry Experience</h2>
+
+    <div class="exp with-logo">
+      <div class="logo-tile"><img src="assets/logo_obsbot.svg" alt="OBSBOT logo"></div>
+      <div class="exp-body">
+      <div class="top">
+        <span class="where">OBSBOT</span><span class="when">2026.06 &ndash; 2026.09</span>
+      </div>
+      <p class="what">Multimodal LLM Algorithm Intern</p>
+      <ul>
+        <li>Built a robotic-arm cinematography LLM on top of a Qwen3.5 multimodal backbone, translating
+            user shooting requests into arm trajectories that drive the camera to perform cinematographic
+            moves.</li>
+        <li>Encoded camera-motion primitives with Finite Scalar Quantization (FSQ) and merged the learned
+            codebook with the Qwen vocabulary into a unified token space, adding two learnable special
+            tokens to delimit motion-token spans.</li>
+        <li>Designed a two-stage LoRA training pipeline: stage one predicts a caption of the camera motion
+            from the arm state and subsequent actions, stage two predicts action chunks step by step from
+            the arm state, the user instruction and the current camera image.</li>
+        <li>Constructed an 18K-trajectory training set and a 200-trajectory benchmark; the model executes
+            six basic camera moves (push/pull, left/right, up/down) from arbitrary initial arm states with
+            accurate adherence to commanded distance and speed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp with-logo">
+      <div class="logo-tile"><img src="assets/logo_hikvision.png" alt="Hikvision logo"></div>
+      <div class="exp-body">
+      <div class="top">
+        <span class="where">Hikvision</span><span class="when">2026.01 &ndash; 2026.05</span>
+      </div>
+      <p class="what">Large Language Model Algorithm Intern</p>
+      <ul>
+        <li>Implemented and tuned knowledge-distillation algorithms for a self-developed multimodal LLM,
+            building the training framework on the <i>verl</i> library to support multiple distillation
+            recipes.</li>
+        <li>Distilled a 4B model into a 1B student on ChartQA-style data and systematically studied
+            off-policy / on-policy / GKD distillation, temperature, learning rate, epochs and supervision
+            forms (forward KL, reverse KL, JSD, veto) to identify the most profitable configuration.</li>
+        <li>Improved average overall accuracy by about 7% across seven ChartQA-style benchmarks with
+            on-policy distillation.</li>
+        <li>Built a 4B safety expert model: collected and merged recent open safety benchmarks into the
+            evaluation framework, generated teacher responses with Qwen3-235B-A22B, and fine-tuned the 4B
+            model with SFT for later multi-teacher distillation.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2><span class="bar"></span>Education</h2>
+    <div class="exp">
+      <div class="top">
+        <span class="where">Wuhan University &mdash; M.S. in Photogrammetry and Remote Sensing</span>
+        <span class="when">2024.09 &ndash; 2027.06</span>
+      </div>
+      <p class="what">LIESMARS (State Key Laboratory of Information Engineering in Surveying, Mapping and
+        Remote Sensing) &middot; admitted through recommendation without entrance examination</p>
+      <ul>
+        <li>Research interests: computer vision, multimodal large language models, digital human&ndash;object interaction.</li>
+        <li>Honors: Outstanding Graduate Student, Wuhan University; Outstanding Communist Youth League Member, Wuhan University.</li>
+      </ul>
+    </div>
+    <div class="exp">
+      <div class="top">
+        <span class="where">Central South University &mdash; B.Eng. in Geomatics</span>
+        <span class="when">2020.09 &ndash; 2024.06</span>
+      </div>
+      <p class="what">Weighted average 90.52/100 &middot; major rank 4/70 (top 5.7%) &middot; CET-4 573 / CET-6 526</p>
+    </div>
+  </section>
+
+  <section id="awards">
+    <h2><span class="bar"></span>Awards &amp; Honors</h2>
+    <ul>
+      <li>First Prize, National College Surveying and Mapping Programming Contest</li>
+      <li>Second Prize, National College Surveying and Mapping Sci-Tech Paper Contest</li>
+      <li>National Inspiration Scholarship, three consecutive years (2021&ndash;2023)</li>
+      <li>Outstanding Graduate Student, Wuhan University</li>
+      <li>Outstanding Communist Youth League Member, Wuhan University</li>
+      <li>Outstanding Student, Central South University</li>
+      <li>First-class Annual Scholarship, Central South University (and 10+ other awards)</li>
+    </ul>
+  </section>
+
+  <section id="skills">
+    <h2><span class="bar"></span>Skills</h2>
+    <dl class="kv">
+      <dt>Programming</dt><dd>Python, PyTorch</dd>
+      <dt>LLM training</dt><dd>LoRA / SFT fine-tuning, multi-task instruction tuning, knowledge distillation (off-policy, on-policy, GKD), reinforcement-learning toolchains (verl)</dd>
+      <dt>Multimodal &amp; generative</dt><dd>Qwen-series vision-language models, VQ-VAE / FSQ motion tokenization, diffusion models, 3D human&ndash;object interaction generation</dd>
+      <dt>Engineering</dt><dd>Dataset construction and curation, benchmark design, evaluation frameworks, large-scale training and ablation studies</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p>
+      Contact: <a href="mailto:kissfly0608@163.com">kissfly0608@163.com</a>
+      <!-- Phone, if you want it public:
+           &nbsp;&middot;&nbsp; +86 136 4558 9429 -->
+    </p>
+    <p class="muted">&copy; 2026 Mengfei Zhang &middot; Last updated: October 2026</p>
+  </footer>
+
+</main>
+
+<div id="lb"><button aria-label="Close" onclick="closeLb()">&times;</button><img id="lbimg" alt=""></div>
+<script>
+  const lb = document.getElementById('lb');
+  const lbimg = document.getElementById('lbimg');
+  document.querySelectorAll('figure img').forEach(function (img) {
+    img.addEventListener('click', function () {
+      lbimg.src = img.src;
+      lbimg.alt = img.alt;
+      lb.classList.add('on');
+    });
+  });
+  function closeLb(){ lb.classList.remove('on'); lbimg.removeAttribute('src'); }
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
