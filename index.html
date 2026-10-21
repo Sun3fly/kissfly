@@ -86,6 +86,8 @@
     border:1px solid var(--line); border-radius:12px;
     display:flex; align-items:center; justify-content:center;
   }
+  /* university seals: column hugs the mark (no wide wordmark card), so it sits close to the text */
+  .logo-tile.seal{flex:0 0 64px; width:64px; height:64px; padding:0; background:none; border:0}
   .logo-tile img{max-width:100%; max-height:100%; object-fit:contain; display:block}
   .exp-body{flex:1; min-width:0}
   .exp .top{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
@@ -174,10 +176,10 @@
     <h2><span class="bar"></span>News</h2>
     <ul class="news">
       <li><span class="date">2026.09</span><span>Completed my internship at <b>OBSBOT</b>, where I built a robotic-arm cinematography LLM.</span></li>
+      <li><span class="date">2026.07</span><span>One paper accepted to <b>ACM Multimedia 2026</b> (CCF-A).</span></li>
       <li><span class="date">2026.06</span><span>Joined <b>OBSBOT</b> as a Multimodal LLM Algorithm Intern.</span></li>
       <li><span class="date">2026.05</span><span>Completed my internship at <b>Hikvision</b> on knowledge distillation for multimodal LLMs.</span></li>
       <li><span class="date">2026.01</span><span>Joined <b>Hikvision</b> as an LLM Algorithm Intern.</span></li>
-      <li><span class="date">2026</span><span>One paper accepted to <b>ACM Multimedia 2026</b> (CCF-A).</span></li>
     </ul>
   </section>
 
@@ -275,24 +277,30 @@
 
   <section id="education">
     <h2><span class="bar"></span>Education</h2>
-    <div class="exp">
-      <div class="top">
-        <span class="where">Wuhan University &mdash; M.S. in Photogrammetry and Remote Sensing</span>
-        <span class="when">2024.09 &ndash; 2027.06</span>
+    <div class="exp with-logo">
+      <div class="logo-tile seal"><img src="assets/logo_whu.png" alt="Wuhan University logo"></div>
+      <div class="exp-body">
+        <div class="top">
+          <span class="where">Wuhan University &mdash; M.S. in Photogrammetry and Remote Sensing</span>
+          <span class="when">2024.09 &ndash; 2027.06</span>
+        </div>
+        <p class="what">LIESMARS (State Key Laboratory of Information Engineering in Surveying, Mapping and
+          Remote Sensing) &middot; admitted through recommendation without entrance examination</p>
+        <ul>
+          <li>Research interests: computer vision, multimodal large language models, digital human&ndash;object interaction.</li>
+          <li>Honors: Outstanding Graduate Student, Wuhan University; Outstanding Communist Youth League Member, Wuhan University.</li>
+        </ul>
       </div>
-      <p class="what">LIESMARS (State Key Laboratory of Information Engineering in Surveying, Mapping and
-        Remote Sensing) &middot; admitted through recommendation without entrance examination</p>
-      <ul>
-        <li>Research interests: computer vision, multimodal large language models, digital human&ndash;object interaction.</li>
-        <li>Honors: Outstanding Graduate Student, Wuhan University; Outstanding Communist Youth League Member, Wuhan University.</li>
-      </ul>
     </div>
-    <div class="exp">
-      <div class="top">
-        <span class="where">Central South University &mdash; B.Eng. in Geomatics</span>
-        <span class="when">2020.09 &ndash; 2024.06</span>
+    <div class="exp with-logo">
+      <div class="logo-tile seal"><img src="assets/logo_csu.svg" alt="Central South University logo"></div>
+      <div class="exp-body">
+        <div class="top">
+          <span class="where">Central South University &mdash; B.Eng. in Geomatics</span>
+          <span class="when">2020.09 &ndash; 2024.06</span>
+        </div>
+        <p class="what">Weighted average 90.52/100 &middot; major rank 4/70 (top 5.7%) &middot; CET-4 573 / CET-6 526</p>
       </div>
-      <p class="what">Weighted average 90.52/100 &middot; major rank 4/70 (top 5.7%) &middot; CET-4 573 / CET-6 526</p>
     </div>
   </section>
 
